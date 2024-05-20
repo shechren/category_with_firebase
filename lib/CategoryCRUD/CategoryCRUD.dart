@@ -1,6 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 
-import '../CategoryData/CategoryData.dart';
+import 'package:category_with_firebase/category_with_firebase.dart';
 
 class CategoryCRUD {
   static final FirebaseFirestore _instance = FirebaseFirestore.instance;
