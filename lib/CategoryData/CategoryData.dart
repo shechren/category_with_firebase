@@ -1,4 +1,4 @@
-// 기본 카테고리 클래스
+// Initialize Category Data
 class InitCategory {
   InitCategory(
       {required this.name,
@@ -7,12 +7,18 @@ class InitCategory {
       this.parentId,
       this.ordinary});
 
+  // Category name
   final String name;
+  // Category depth
   final int depth;
+  // Category id
   final String? id;
+  // Category parent id
   final String? parentId;
+  // Category ordinary
   final int? ordinary;
 
+  // Make map from InitCategory data
   Map<String, dynamic> makeMap() {
     return {
       'name': name,
@@ -23,6 +29,7 @@ class InitCategory {
     };
   }
 
+  // Load map for InitCategory data
   static InitCategory loadMap (Map<String, dynamic> doc, String id) {
     return InitCategory(
       name: doc['name'],
