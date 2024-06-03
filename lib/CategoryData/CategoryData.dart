@@ -1,10 +1,9 @@
-// Initialize Category Data
 class InitCategory {
   InitCategory(
       {required this.name,
         required this.depth,
         this.id,
-        this.parentId,
+        this.parentPrimary,
         this.primary,
         this.ordinary});
 
@@ -14,8 +13,8 @@ class InitCategory {
   final int depth;
   // Category id
   final String? id;
-  // Category parent id
-  final String? parentId;
+  // Category parent primary
+  final int? parentPrimary;
   // Category primary
   final int? primary;
   // Category ordinary
@@ -27,7 +26,7 @@ class InitCategory {
       'name': name,
       'depth': depth,
       'id': id ?? '',
-      'parentId': parentId ?? '',
+      'parentPrimary': parentPrimary ?? 0,
       'primary': primary ?? 0,
       'ordinary': ordinary ?? 0,
     };
@@ -39,7 +38,7 @@ class InitCategory {
       name: doc['name'],
       depth: doc['depth'],
       id: doc['id'],
-      parentId: doc['parentId'],
+      parentPrimary: doc['parentPrimary'],
       primary: doc['primary'],
       ordinary: doc['ordinary'],
     );
