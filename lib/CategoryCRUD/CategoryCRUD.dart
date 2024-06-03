@@ -116,12 +116,12 @@ class CategoryCRUD {
 
   // get Tertiary Category
   static Future<List<InitCategory>> getTertiary(
-      {required String collection, required String parentId}) async {
+      {required String collection, required String id}) async {
     // get all data where depth is 3 and subId is parentId
     final snapshot = await _instance
         .collection(collection)
         .where('depth', isEqualTo: 3)
-        .where('subId', isEqualTo: parentId)
+        .where('parentId', isEqualTo: id)
         .get();
     final List<InitCategory> data =
         snapshot.docs.map((e) => InitCategory.loadMap(e.data(), e.id)).toList();
