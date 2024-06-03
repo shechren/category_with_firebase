@@ -1,3 +1,3 @@
-## 1.0.2+1
+## 1.0.4+1
 
 - Initial release of `category_with_firebase`.
