@@ -50,7 +50,7 @@ class CategoryCRUD {
         int? parentPrimary}) async {
     DocumentReference docRef =
     await _instance.collection(collection).add(category.makeMap());
-    await docRef.update({'id': docRef.id, 'parentPrimary': parentPrimary ?? 0});
+    await docRef.update({'id': docRef.id, 'parentPrimary': category.primary ?? 0});
     await addPrimary(collection: collection, id: docRef.id);
     await addOrdinary(
         collection: collection, id: docRef.id, depth: category.depth);
