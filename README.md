@@ -4,49 +4,6 @@ This library is made for individual projects to manage categories using Firebase
 
 ## Getting Started
 
-### Category Structure
-
-The `InitCategory` class represents the structure of a category.
-```
-class InitCategory {
-InitCategory({
-required this.name,
-required this.depth,
-this.id,
-this.parentPrimary,
-this.primary,
-this.ordinary,
-});
-final String name;
-final int depth;
-final String? id;
-final int? parentPrimary;
-final int? primary;
-final int? ordinary;
-
-    Map<String, dynamic> makeMap() {
-    return {
-        'name': name,
-        'depth': depth,
-        'id': id ?? '',
-        'parentPrimary': parentPrimary ?? 0,
-        'primary': primary ?? 0,
-        'ordinary': ordinary ?? 0,
-    };
-}
-
-static InitCategory loadMap(Map<String, dynamic> map, String id) {
-return InitCategory(
-name: map['name'],
-depth: map['depth'],
-id: id,
-parentPrimary: map['parentPrimary'],
-primary: map['primary'],
-ordinary: map['ordinary'],
-);
-}
-}
-```
 ### InitCategory Fields
 
 - `name`: Category Name
