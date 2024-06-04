@@ -1,5 +1,3 @@
-
-
 import 'dart:typed_data';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -58,9 +56,11 @@ class CategoryCRUD {
     DocumentReference docRef =
         await _instance.collection(collection).add(category.makeMap());
     if (image != null) {
-      await _storage.ref('$collection/${category.primary}').putData(image);
+      Reference ref =
+          _storage.ref().child('$collection/${category.primary.toString()}');
+      await ref.putData(image, SettableMetadata(contentType: 'image/png'));
       final imageUrl = await _storage
-          .ref('$collection/${category.primary}')
+          .ref('$collection/${category.primary.toString()}')
           .getDownloadURL();
       await docRef.update({'image': imageUrl});
     }
