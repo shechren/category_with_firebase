@@ -1,3 +1,5 @@
+import 'dart:nativewrappers/_internal/vm/lib/typed_data_patch.dart';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:category_with_firebase/category_with_firebase.dart';
 import 'package:firebase_storage/firebase_storage.dart';
@@ -50,11 +52,11 @@ class CategoryCRUD {
       {required String collection,
       required InitCategory category,
       int? parentPrimary,
-      SettableMetadata? image}) async {
+      Uint8List? image}) async {
     DocumentReference docRef =
         await _instance.collection(collection).add(category.makeMap());
     if (category.image != null) {
-      await _storage.ref('$collection/${category.primary}').putBlob(image);
+      await _storage.ref('$collection/${category.primary}').putData(image);
       final imageUrl = await _storage
           .ref('$collection/${category.primary}')
           .getDownloadURL();
