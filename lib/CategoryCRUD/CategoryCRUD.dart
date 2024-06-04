@@ -57,7 +57,7 @@ class CategoryCRUD {
       Uint8List? image}) async {
     DocumentReference docRef =
         await _instance.collection(collection).add(category.makeMap());
-    if (category.image != null) {
+    if (image != null) {
       await _storage.ref('$collection/${category.primary}').putData(image);
       final imageUrl = await _storage
           .ref('$collection/${category.primary}')
