@@ -11,7 +11,7 @@ class CategoryCRUD {
   static final FirebaseStorage _storage = FirebaseStorage.instance;
 
   // add Primary
-  static Future<void> addPrimary(
+  static Future<int> addPrimary(
       {required String collection, required String id}) async {
     final snapshotAll = await _instance.collection(collection).get();
     int maxPrimary = 0;
@@ -24,6 +24,8 @@ class CategoryCRUD {
         .collection(collection)
         .doc(id)
         .update({'primary': maxPrimary + 1});
+
+    return maxPrimary + 1;
   }
 
   // add Ordinary
@@ -55,20 +57,21 @@ class CategoryCRUD {
       Uint8List? image}) async {
     DocumentReference docRef =
         await _instance.collection(collection).add(category.makeMap());
+
+    await docRef.update({'id': docRef.id, 'parentPrimary': parentPrimary ?? 0});
+    int primary = await addPrimary(collection: collection, id: docRef.id);
+    await addOrdinary(
+        collection: collection, id: docRef.id, depth: category.depth);
+
     if (image != null) {
       Reference ref =
-          _storage.ref().child('$collection/${category.primary.toString()}');
+      _storage.ref().child('$collection/${primary.toString()}');
       await ref.putData(image, SettableMetadata(contentType: 'image/png'));
       final imageUrl = await _storage
-          .ref('$collection/${category.primary.toString()}')
+          .ref('$collection/${primary.toString()}')
           .getDownloadURL();
       await docRef.update({'image': imageUrl});
     }
-
-    await docRef.update({'id': docRef.id, 'parentPrimary': parentPrimary ?? 0});
-    await addPrimary(collection: collection, id: docRef.id);
-    await addOrdinary(
-        collection: collection, id: docRef.id, depth: category.depth);
   }
 
   // get all Category
