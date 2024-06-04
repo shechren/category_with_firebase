@@ -1,24 +1,34 @@
 class InitCategory {
   InitCategory(
       {required this.name,
-        required this.depth,
-        this.id,
-        this.parentPrimary,
-        this.primary,
-        this.ordinary});
+      required this.depth,
+      this.id,
+      this.image,
+      this.parentPrimary,
+      this.primary,
+      this.ordinary});
 
   // Category name
   final String name;
+
   // Category depth
   final int depth;
+
   // Category id
   final String? id;
+
   // Category parent primary
   final int? parentPrimary;
+
   // Category primary
   final int? primary;
+
   // Category ordinary
   final int? ordinary;
+
+  // Category icons
+  // image = firebase storage url
+  final String? image;
 
   // Make map from InitCategory data
   Map<String, dynamic> makeMap() {
@@ -29,6 +39,7 @@ class InitCategory {
       'parentPrimary': parentPrimary ?? 0,
       'primary': primary ?? 0,
       'ordinary': ordinary ?? 0,
+      'image': image ?? 0,
     };
   }
 
@@ -41,6 +52,7 @@ class InitCategory {
       parentPrimary: doc['parentPrimary'],
       primary: doc['primary'],
       ordinary: doc['ordinary'],
+      image: doc['image'],
     );
   }
 }

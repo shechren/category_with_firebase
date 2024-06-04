@@ -23,166 +23,184 @@ The `CategoryCRUD` class provides functions for Firebase database logic.
 
 Adds a primary value to a category.
 
+```dart
 static Future<void> addPrimary({required String collection, required String id}) async
+```
 
 - **Parameters:**
-    - `collection` (String): The name of the Firestore collection.
-    - `id` (String): The document ID of the category.
+  - `collection` (String): The name of the Firestore collection.
+  - `id` (String): The document ID of the category.
 
 - **Description:**
-    - Retrieves all documents in the specified collection.
-    - Finds the maximum primary value.
-    - Sets the primary value of the specified document to `max + 1`.
+  - Retrieves all documents in the specified collection.
+  - Finds the maximum primary value.
+  - Sets the primary value of the specified document to `max + 1`.
 
 ##### `addOrdinary`
 
 Adds an ordinary value to a category within the same depth.
 
+```dart
 static Future<void> addOrdinary({required String collection, required String id, required int depth}) async
+```
 
 - **Parameters:**
-    - `collection` (String): The name of the Firestore collection.
-    - `id` (String): The document ID of the category.
-    - `depth` (int): The depth of the category.
+  - `collection` (String): The name of the Firestore collection.
+  - `id` (String): The document ID of the category.
+  - `depth` (int): The depth of the category.
 
 - **Description:**
-    - Retrieves all documents in the specified collection with the same depth.
-    - Finds the maximum ordinary value within the same depth.
-    - Sets the ordinary value of the specified document to `max + 1`.
+  - Retrieves all documents in the specified collection with the same depth.
+  - Finds the maximum ordinary value within the same depth.
+  - Sets the ordinary value of the specified document to `max + 1`.
 
 ##### `addCategory`
 
 Adds a new category to the specified collection.
 
+```dart
 static Future<void> addCategory({
 required String collection,
 required InitCategory category,
 int? parentPrimary
 }) async
+```
 
 - **Parameters:**
-    - `collection` (String): The name of the Firestore collection.
-    - `category` (InitCategory): The category object to be added.
-    - `parentPrimary` (int, optional): The parent primary value of the category.
+  - `collection` (String): The name of the Firestore collection.
+  - `category` (InitCategory): The category object to be added.
+  - `parentPrimary` (int, optional): The parent primary value of the category.
 
 - **Description:**
-    - Adds a new document to the specified collection.
-    - Updates the document with its own ID and the parent primary value.
-    - Sets the primary and ordinary values.
+  - Adds a new document to the specified collection.
+  - Updates the document with its own ID and the parent primary value.
+  - Sets the primary and ordinary values.
 
 ##### `getCategories`
 
 Retrieves all categories from the specified collection.
 
+```dart
 static Future<List<InitCategory>> getCategories({
 required String collection
 }) async
+```
 
 - **Parameters:**
-    - `collection` (String): The name of the Firestore collection.
+  - `collection` (String): The name of the Firestore collection.
 
 - **Returns:**
-    - `Future<List<InitCategory>>`: A list of categories.
+  - `Future<List<InitCategory>>`: A list of categories.
 
 - **Description:**
-    - Retrieves all documents in the specified collection.
-    - Maps the documents to `InitCategory` objects.
-    - Sorts the categories by their primary value.
+  - Retrieves all documents in the specified collection.
+  - Maps the documents to `InitCategory` objects.
+  - Sorts the categories by their primary value.
 
 ##### `getMain`
 
 Retrieves main categories from the specified collection.
 
+```dart
 static Future<List<InitCategory>> getMain({
 required String collection
 }) async
+```
 
 - **Parameters:**
-    - `collection` (String): The name of the Firestore collection.
+  - `collection` (String): The name of the Firestore collection.
 
 - **Returns:**
-    - `Future<List<InitCategory>>`: A list of main categories.
+  - `Future<List<InitCategory>>`: A list of main categories.
 
 - **Description:**
-    - Retrieves all documents in the specified collection where the depth is 1.
-    - Maps the documents to `InitCategory` objects.
-    - Sorts the categories by their primary value.
+  - Retrieves all documents in the specified collection where the depth is 1.
+  - Maps the documents to `InitCategory` objects.
+  - Sorts the categories by their primary value.
 
 ##### `getSecondary`
 
 Retrieves secondary categories from the specified collection.
 
+```dart
 static Future<List<InitCategory>> getSecondary({
 required String collection,
 required int parentPrimary
 }) async
+```
 
 - **Parameters:**
-    - `collection` (String): The name of the Firestore collection.
-    - `parentPrimary` (int): The primary value of the parent category.
+  - `collection` (String): The name of the Firestore collection.
+  - `parentPrimary` (int): The primary value of the parent category.
 
 - **Returns:**
-    - `Future<List<InitCategory>>`: A list of secondary categories.
+  - `Future<List<InitCategory>>`: A list of secondary categories.
 
 - **Description:**
-    - Retrieves all documents in the specified collection where the depth is 2 and the parent primary matches.
-    - Maps the documents to `InitCategory` objects.
-    - Sorts the categories by their primary value.
+  - Retrieves all documents in the specified collection where the depth is 2 and the parent primary matches.
+  - Maps the documents to `InitCategory` objects.
+  - Sorts the categories by their primary value.
 
 ##### `getTertiary`
 
 Retrieves tertiary categories from the specified collection.
 
+```dart
 static Future<List<InitCategory>> getTertiary({
 required String collection,
 required int parentPrimary
 }) async
+```
 
 - **Parameters:**
-    - `collection` (String): The name of the Firestore collection.
-    - `parentPrimary` (int): The primary value of the parent category.
+  - `collection` (String): The name of the Firestore collection.
+  - `parentPrimary` (int): The primary value of the parent category.
 
 - **Returns:**
-    - `Future<List<InitCategory>>`: A list of tertiary categories.
+  - `Future<List<InitCategory>>`: A list of tertiary categories.
 
 - **Description:**
-    - Retrieves all documents in the specified collection where the depth is 3 and the parent primary matches.
-    - Maps the documents to `InitCategory` objects.
-    - Sorts the categories by their primary value.
+  - Retrieves all documents in the specified collection where the depth is 3 and the parent primary matches.
+  - Maps the documents to `InitCategory` objects.
+  - Sorts the categories by their primary value.
 
 ##### `updateCategory`
 
 Updates the name of a category.
 
+```dart
 static Future<void> updateCategory({
 required String collection,
 required String id,
 required String name
 }) async
+```
 
 - **Parameters:**
-    - `collection` (String): The name of the Firestore collection.
-    - `id` (String): The document ID of the category.
-    - `name` (String): The new name of the category.
+  - `collection` (String): The name of the Firestore collection.
+  - `id` (String): The document ID of the category.
+  - `name` (String): The new name of the category.
 
 - **Description:**
-    - Updates the specified document with the new name.
+  - Updates the specified document with the new name.
 
 ##### `deleteCategory`
 
 Deletes a category from the specified collection.
 
+```dart
 static Future<void> deleteCategory({
 required String collection,
 required String id
 }) async
+```
 
 - **Parameters:**
-    - `collection` (String): The name of the Firestore collection.
-    - `id` (String): The document ID of the category.
+  - `collection` (String): The name of the Firestore collection.
+  - `id` (String): The document ID of the category.
 
 - **Description:**
-    - Deletes the specified document from the collection.
+  - Deletes the specified document from the collection.
 
 Provided by Luna Shechren
 https://github.com/shechren

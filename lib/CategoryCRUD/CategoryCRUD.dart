@@ -1,10 +1,12 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:category_with_firebase/category_with_firebase.dart';
+import 'package:firebase_storage/firebase_storage.dart';
 
 // the Class for CRUD operation for Category
 class CategoryCRUD {
   // the instance of Firestore
   static final FirebaseFirestore _instance = FirebaseFirestore.instance;
+  static final FirebaseStorage _storage = FirebaseStorage.instance;
 
   // add Primary
   static Future<void> addPrimary(
@@ -25,8 +27,8 @@ class CategoryCRUD {
   // add Ordinary
   static Future<void> addOrdinary(
       {required String collection,
-        required String id,
-        required int depth}) async {
+      required String id,
+      required int depth}) async {
     final snapshotAll = await _instance
         .collection(collection)
         .where('depth', isEqualTo: depth)
@@ -46,11 +48,20 @@ class CategoryCRUD {
   // add Category
   static Future<void> addCategory(
       {required String collection,
-        required InitCategory category,
-        int? parentPrimary}) async {
+      required InitCategory category,
+      int? parentPrimary,
+      SettableMetadata? image}) async {
     DocumentReference docRef =
-    await _instance.collection(collection).add(category.makeMap());
-    await docRef.update({'id': docRef.id, 'parentPrimary': category.primary ?? 0});
+        await _instance.collection(collection).add(category.makeMap());
+    if (category.image != null) {
+      await _storage.ref('$collection/${category.primary}').putBlob(image);
+      final imageUrl = await _storage
+          .ref('$collection/${category.primary}')
+          .getDownloadURL();
+      await docRef.update({'image': imageUrl});
+    }
+
+    await docRef.update({'id': docRef.id, 'parentPrimary': parentPrimary ?? 0});
     await addPrimary(collection: collection, id: docRef.id);
     await addOrdinary(
         collection: collection, id: docRef.id, depth: category.depth);
@@ -61,9 +72,9 @@ class CategoryCRUD {
       {required String collection}) async {
     final snapshot = await _instance.collection(collection).get();
     final List<InitCategory> data =
-    snapshot.docs.map((e) => InitCategory.loadMap(e.data(), e.id)).toList();
+        snapshot.docs.map((e) => InitCategory.loadMap(e.data(), e.id)).toList();
     data.sort(
-          (a, b) => a.primary!.compareTo(b.primary!),
+      (a, b) => a.primary!.compareTo(b.primary!),
     );
     return data;
   }
@@ -76,7 +87,7 @@ class CategoryCRUD {
         .where('depth', isEqualTo: 1)
         .get();
     final List<InitCategory> data =
-    snapshot.docs.map((e) => InitCategory.loadMap(e.data(), e.id)).toList();
+        snapshot.docs.map((e) => InitCategory.loadMap(e.data(), e.id)).toList();
     data.sort((a, b) => a.primary!.compareTo(b.primary!));
     return data;
   }
@@ -90,7 +101,7 @@ class CategoryCRUD {
         .where('parentPrimary', isEqualTo: parentPrimary)
         .get();
     final List<InitCategory> data =
-    snapshot.docs.map((e) => InitCategory.loadMap(e.data(), e.id)).toList();
+        snapshot.docs.map((e) => InitCategory.loadMap(e.data(), e.id)).toList();
     data.sort((a, b) => a.primary!.compareTo(b.primary!));
     return data;
   }
@@ -104,7 +115,7 @@ class CategoryCRUD {
         .where('parentPrimary', isEqualTo: parentPrimary)
         .get();
     final List<InitCategory> data =
-    snapshot.docs.map((e) => InitCategory.loadMap(e.data(), e.id)).toList();
+        snapshot.docs.map((e) => InitCategory.loadMap(e.data(), e.id)).toList();
     data.sort((a, b) => a.primary!.compareTo(b.primary!));
     return data;
   }
@@ -112,14 +123,14 @@ class CategoryCRUD {
   // update Category
   static Future<void> updateCategory(
       {required String collection,
-        required String id,
-        required String name}) async {
-    await _instance.collection(collection).doc(id).update({'name': name});
+      required String primary,
+      required String name}) async {
+    await _instance.collection(collection).doc(primary).update({'name': name});
   }
 
   // delete Category
   static Future<void> deleteCategory(
-      {required String collection, required String id}) async {
-    await _instance.collection(collection).doc(id).delete();
+      {required String collection, required String primary}) async {
+    await _instance.collection(collection).doc(primary).delete();
   }
 }
