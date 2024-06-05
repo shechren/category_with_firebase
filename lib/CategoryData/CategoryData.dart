@@ -39,7 +39,7 @@ class InitCategory {
       'parentPrimary': parentPrimary ?? 0,
       'primary': primary ?? 0,
       'ordinary': ordinary ?? 0,
-      'image': image ?? 0,
+      'image': image ?? '',
     };
   }
 

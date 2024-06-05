@@ -130,14 +130,14 @@ class CategoryCRUD {
   // update Category
   static Future<void> updateCategory(
       {required String collection,
-      required String primary,
+      required int primary,
       required String name}) async {
-    await _instance.collection(collection).doc(primary).update({'name': name});
+    await _instance.collection(collection).doc(primary.toString()).update({'name': name});
   }
 
   // delete Category
   static Future<void> deleteCategory(
-      {required String collection, required String primary}) async {
-    await _instance.collection(collection).doc(primary).delete();
+      {required String collection, required int primary}) async {
+    await _instance.collection(collection).doc(primary.toString()).delete();
   }
 }
