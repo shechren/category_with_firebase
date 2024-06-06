@@ -3,7 +3,7 @@ description: category_with_firebase
 repository: https://github.com/shechren/category_with_firebase
 
 
-version: 1.2.0
+version: 1.2.2
 
 environment:
   sdk: '>=3.3.4 <4.0.0'
