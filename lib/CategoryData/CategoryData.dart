@@ -7,7 +7,8 @@ class InitCategory {
     this.parentPrimary,
     this.primary,
     this.ordinary,
-    this.keyword,
+    this.keyword1,
+    this.keyword2,
   });
 
   // Category name
@@ -32,7 +33,9 @@ class InitCategory {
   // image = firebase storage url
   final String? image;
 
-  final String? keyword;
+  final String? keyword1;
+
+  final String? keyword2;
 
   // Make map from InitCategory data
   Map<String, dynamic> makeMap() {
@@ -44,7 +47,8 @@ class InitCategory {
       'primary': primary ?? 0,
       'ordinary': ordinary ?? 0,
       'image': image ?? '',
-      'keyword': keyword ?? '',
+      'keyword1': keyword1 ?? '',
+      'keyword2': keyword2 ?? '',
     };
   }
 
@@ -58,7 +62,8 @@ class InitCategory {
       primary: doc['primary'],
       ordinary: doc['ordinary'],
       image: doc['image'],
-      keyword: doc['keyword'],
+      keyword1: doc['keyword1'],
+      keyword2: doc['keyword2'],
     );
   }
 }
