@@ -1,3 +1,4 @@
+import 'dart:ffi';
 import 'dart:typed_data';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -10,10 +11,10 @@ class CategoryCRUD {
   static final FirebaseStorage _storage = FirebaseStorage.instance;
 
   // add Category
-  static Future<void> addCategory(InitCategory data) async {
+  static Future<void> addCategory(InitCategory data, Uint8List? image) async {
     final DocumentReference<Map<String, dynamic>> docRef =
         await _instance.collection('category').add(data.makeMap());
-    if (data.image != null) {
+    if (image != null) {
       final Reference ref = _storage.ref().child('category/${data.keyword}');
       await ref.putData(data.image! as Uint8List);
       final String url = await ref.getDownloadURL();
@@ -41,7 +42,8 @@ class CategoryCRUD {
   }
 
   // update Category
-  static Future<void> updateCategory(InitCategory data, String id) async {
+  static Future<void> updateCategory(
+      InitCategory data, Uint8List? image, String id) async {
     final DocumentReference<Map<String, dynamic>> docRef =
         _instance.collection('category').doc(id);
     if (data.image != null) {
