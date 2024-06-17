@@ -1,6 +1,5 @@
 class InitCategory {
   InitCategory({
-    required this.name,
     required this.depth,
     this.id,
     this.image,
@@ -10,9 +9,6 @@ class InitCategory {
     this.keyword1,
     this.keyword2,
   });
-
-  // Category name
-  final String name;
 
   // Category depth
   final int depth;
@@ -40,7 +36,6 @@ class InitCategory {
   // Make map from InitCategory data
   Map<String, dynamic> makeMap() {
     return {
-      'name': name,
       'depth': depth,
       'id': id ?? '',
       'parentPrimary': parentPrimary ?? 0,
@@ -55,7 +50,6 @@ class InitCategory {
   // Load map for InitCategory data
   static InitCategory loadMap(Map<String, dynamic> doc, String id) {
     return InitCategory(
-      name: doc['name'],
       depth: doc['depth'],
       id: doc['id'],
       parentPrimary: doc['parentPrimary'],
